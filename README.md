@@ -51,8 +51,8 @@ agent economy.
 |---|---|
 | Program ID | `2iPfRiccKppYcNzZb15b68ydZdjDh2oDM5HUH5BpNHRz` |
 | Framework | Anchor 0.31.1 · Solana (Agave) 4.4.1 · Rust |
-| Cluster | devnet (deploy pending deployer funding — see Status) |
-| Explorer | _to be added after devnet deploy_ |
+| Cluster | devnet — **deployed 25 Nov 2026** (slot 526065448) |
+| Explorer | https://explorer.solana.com/address/2iPfRiccKppYcNzZb15b68ydZdjDh2oDM5HUH5BpNHRz?cluster=devnet |
 
 | Account | Seeds | Fields |
 |---|---|---|
@@ -120,13 +120,21 @@ trust or to run.
 - ✅ Anchor program complete; `anchor build` clean (SBFv3).
 - ✅ LiteSVM test suite 8/8 passing; demo script verified green locally.
 - ✅ Static web directory reads/decodes via the generated IDL.
-- ⏳ **Devnet deploy pending**: the dedicated project deployer
-  (`2dowh8tPt7RhWFFdegRKaF12JMQTxR792E6PA81r7NdY`) still holds 0 SOL —
-  public devnet faucet airdrops from this environment failed (rate limits /
-  egress), and one balance check against `api.devnet.solana.com` timed out.
-  Deploy is a single command once funded: `anchor deploy --provider.cluster devnet`.
-- ⏳ GitHub publication pending the owner's `gh auth login` (repo is
-  initialized locally with a clean, secret-free tree — see `.gitignore`).
+- ✅ **Deployed to devnet** (25 Nov 2026): deploy tx
+  `fmSfzMr6cChXaG6xBnnWJw9D2BN64bBKBtANH6kthQHbjU3yN1c4ioDaRXVcpdfwzYo4zbXkAyPdoKmn8jfd6yf`,
+  ProgramData `213Absq8cFUsKfQ6UpZBWS8iBG5tP1hwm8F7sPFKLRun`. The stock CLI
+  deploy could not land its burst of buffer writes through this network (the
+  public RPC drops them), so the buffer was filled with a paced,
+  resume-capable uploader (`scripts/upload-buffer.mjs`, one confirmed
+  transaction at a time) and then deployed from the completed buffer.
+- ✅ **Devnet demo verified end-to-end**: two agents registered
+  (`elsanani`, `agent-bravo`), both checked in, a duplicate same-day
+  check-in was rejected by the program with `AlreadyCheckedInToday`, and the
+  leaderboard was read back from the on-chain accounts (2 agents · 2
+  check-ins · 2 unique agents).
+- ✅ Published on GitHub: https://github.com/Rujekk/agentboard
+- ⏳ Remaining: Dev3pack application review, then the hackathon submission
+  (27–29 Nov 2026).
 
 ## Layout
 

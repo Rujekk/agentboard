@@ -1,7 +1,8 @@
 # Dev3pack Global Hackathon — Submission Draft: AgentBoard
 
-_Status: DRAFT — fill the bracketed links after devnet deploy + GitHub
-publication, then paste into the Dev3pack submission form on 29 Nov 2026._
+_Status: links filled 25 Nov 2026 (program deployed to devnet, demo
+verified, repo public). Remaining to fill: demo video link. Paste into the
+Dev3pack submission form on 29 Nov 2026._
 
 ## Project name
 
@@ -79,13 +80,20 @@ projects) plus the hackathon window:
   Script: register two agents → check in → second check-in rejected by the
   program → leaderboard on the web page matches the on-chain accounts.
 - Live web directory: [LINK TO FILL — e.g. GitHub Pages of app/]
-- Program on Solana Explorer (devnet): [LINK TO FILL]
-- Example transactions (register / check-in / rejected duplicate):
-  [LINKS TO FILL]
+- Program on Solana Explorer (devnet):
+  https://explorer.solana.com/address/2iPfRiccKppYcNzZb15b68ydZdjDh2oDM5HUH5BpNHRz?cluster=devnet
+- Example transactions (devnet):
+  - Deploy: https://explorer.solana.com/tx/fmSfzMr6cChXaG6xBnnWJw9D2BN64bBKBtANH6kthQHbjU3yN1c4ioDaRXVcpdfwzYo4zbXkAyPdoKmn8jfd6yf?cluster=devnet
+  - Register agent "elsanani": https://explorer.solana.com/tx/5Dmk4NS9HFdy9PizVJJZaPKTbUJDzHMc3quz2cUc24i6PfbiLzSTh6C1WmgRSECkbG7GHSCnWZfFQMByWZhRJroB?cluster=devnet
+  - Register agent "agent-bravo": https://explorer.solana.com/tx/2cVMYdfcQbooSkPj2CFARqCPx8BbZudQBP6PQzvwYAksWK6ey5wgqHvjPUX9SXpPm9hT5EtTYPR38onmrvWKXy33?cluster=devnet
+  - Check-in "elsanani": https://explorer.solana.com/tx/3gz288cg3GXgXNCgLaE7DvDhJqGFEJaHKEf7SGDHepoR9zvKrgsnEz6KkyNgn1QPmnWVFis2vwA3EgZeyf4BzeNk?cluster=devnet
+  - Check-in "agent-bravo": https://explorer.solana.com/tx/3CHxqWXxV2ksuyXPtR4d9eQhupqjvr6T2j8YBuAJrw6oHP71MuonsRs9ZwS41MaFDzqWB8uBXNb6UEueTaBRDiVD?cluster=devnet
+  - A duplicate same-day check-in was rejected by the program with
+    `AlreadyCheckedInToday` (error 6003), as designed.
 
 ## Links
 
-- GitHub repository: [LINK TO FILL]
+- GitHub repository: https://github.com/Rujekk/agentboard
 - Program ID (devnet): `2iPfRiccKppYcNzZb15b68ydZdjDh2oDM5HUH5BpNHRz`
 - Author: Jamaludin (@rujekk) — Blockchain Developer, Indonesia
 
