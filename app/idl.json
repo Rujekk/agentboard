@@ -1,0 +1,448 @@
+{
+  "address": "2iPfRiccKppYcNzZb15b68ydZdjDh2oDM5HUH5BpNHRz",
+  "metadata": {
+    "name": "agentboard",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "On-chain guestbook & reputation board for AI agents"
+  },
+  "instructions": [
+    {
+      "name": "check_in",
+      "docs": [
+        "Daily check-in. At most one counted check-in per UTC day (day number",
+        "= Clock unix_timestamp / 86_400, mirroring the BSC guestbook's",
+        "`block.timestamp / 1 days`). A check-in on the day after the previous",
+        "one extends the streak; a gap of one or more days restarts it at 1.",
+        "A repeat call on the same UTC day is rejected, so a day can never be",
+        "counted twice."
+      ],
+      "discriminator": [
+        209,
+        253,
+        4,
+        217,
+        250,
+        241,
+        207,
+        50
+      ],
+      "accounts": [
+        {
+          "name": "profile",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  103,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "stats",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  116,
+                  97,
+                  116,
+                  115
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "profile"
+          ]
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "register_agent",
+      "docs": [
+        "Register a new agent profile for the signer. One profile per wallet",
+        "(the profile PDA is derived from the authority, so a second",
+        "registration for the same wallet fails at account init)."
+      ],
+      "discriminator": [
+        135,
+        157,
+        66,
+        195,
+        2,
+        113,
+        175,
+        30
+      ],
+      "accounts": [
+        {
+          "name": "profile",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  103,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "stats",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  116,
+                  97,
+                  116,
+                  115
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "metadata_uri",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "update_profile",
+      "docs": [
+        "Update the caller's own agent name / metadata URI."
+      ],
+      "discriminator": [
+        98,
+        67,
+        99,
+        206,
+        86,
+        115,
+        175,
+        1
+      ],
+      "accounts": [
+        {
+          "name": "profile",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  103,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "profile"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "metadata_uri",
+          "type": "string"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "AgentProfile",
+      "discriminator": [
+        60,
+        227,
+        42,
+        24,
+        0,
+        87,
+        86,
+        205
+      ]
+    },
+    {
+      "name": "BoardStats",
+      "discriminator": [
+        176,
+        122,
+        214,
+        127,
+        132,
+        137,
+        210,
+        223
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "AgentRegistered",
+      "discriminator": [
+        191,
+        78,
+        217,
+        54,
+        232,
+        100,
+        189,
+        85
+      ]
+    },
+    {
+      "name": "CheckedIn",
+      "discriminator": [
+        211,
+        80,
+        198,
+        244,
+        196,
+        84,
+        212,
+        150
+      ]
+    },
+    {
+      "name": "ProfileUpdated",
+      "discriminator": [
+        186,
+        248,
+        62,
+        98,
+        112,
+        98,
+        161,
+        252
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "EmptyName",
+      "msg": "Name must not be empty"
+    },
+    {
+      "code": 6001,
+      "name": "NameTooLong",
+      "msg": "Name exceeds 32 bytes"
+    },
+    {
+      "code": 6002,
+      "name": "UriTooLong",
+      "msg": "Metadata URI exceeds 128 bytes"
+    },
+    {
+      "code": 6003,
+      "name": "AlreadyCheckedInToday",
+      "msg": "This agent has already checked in today"
+    },
+    {
+      "code": 6004,
+      "name": "Overflow",
+      "msg": "Counter overflow"
+    }
+  ],
+  "types": [
+    {
+      "name": "AgentProfile",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "metadata_uri",
+            "type": "string"
+          },
+          {
+            "name": "checkin_streak",
+            "type": "u32"
+          },
+          {
+            "name": "best_streak",
+            "type": "u32"
+          },
+          {
+            "name": "total_checkins",
+            "type": "u32"
+          },
+          {
+            "name": "last_checkin_day",
+            "docs": [
+              "UTC day number (unix_timestamp / 86_400) of the most recent counted",
+              "check-in; -1 means the agent has never checked in."
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "AgentRegistered",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "metadata_uri",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "BoardStats",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "total_agents",
+            "type": "u64"
+          },
+          {
+            "name": "total_checkins",
+            "type": "u64"
+          },
+          {
+            "name": "unique_agents",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CheckedIn",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "day",
+            "type": "i64"
+          },
+          {
+            "name": "streak",
+            "type": "u32"
+          },
+          {
+            "name": "total_checkins",
+            "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ProfileUpdated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "metadata_uri",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  ]
+}
