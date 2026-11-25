@@ -1,0 +1,12 @@
+deployer-keypair.json
+.anchor
+target
+node_modules
+dist
+.env
+*.log
+test-ledger
+.DS_Store
+
+# devnet demo agent keypairs (scripts/demo.ts) — never commit
+scripts/demo-keypairs.json
